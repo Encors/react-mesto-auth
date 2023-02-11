@@ -1,5 +1,5 @@
 import React from "react";
-import PopupWithForm from "./PopupWithForm.js";
+import PopupWithForm from "./PopupWithForm";
 
 export default function ConfirmationPopup({
   deletingCard,

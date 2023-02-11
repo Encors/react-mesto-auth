@@ -1,17 +1,23 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import "../index.css";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
-import ImagePopup from "./ImagePopup.js";
+import ImagePopup from "./ImagePopup";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
-import { api } from "../utils/api.js";
+import { api } from "../utils/api";
 import EditProfilePopup from "./EditProfilePopup";
 import AddPlacePopup from "./AddPlacePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import ConfirmationPopup from "./ConfirmationPopup";
+import ProtectedRouteElement from "./ProtectedRoute";
+import Register from "./Register";
+import Login from "./Login";
+import InfoTooltip from "./InfoTooltip";
+import { register, login, checkToken } from "../utils/authApi";
 
-function App() {
+export default function App() {
   const [isOpenAvatarPopup, setIsOpenAvatarPopup] = useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isOpenPlacePopup, setIsOpenPlacePopup] = useState(false);
@@ -25,18 +31,48 @@ function App() {
   const [loadingEditAvatarPopup, setLoadingEditAvatarPopup] = useState(false);
   const [isOpenConfirmationPopup, setIsOpenConfirmationPopup] = useState(false);
   const [deletingCard, setDeletingCard] = useState(null);
+  const navigate = useNavigate();
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+  const [isOpenInfoTooltip, setOpenInfoTooltip] = useState(false);
+  const [responseInfo, setResponseInfo] = useState({
+    status: false,
+    text: "",
+  });
 
   useEffect(() => {
-    api
-      .getAllStartedInfo()
-      .then(([user, cards]) => {
-        setCurrentUser(user);
-        setCards(cards);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const jwt = localStorage.getItem("jwt");
+
+    if (jwt) {
+      checkToken(jwt)
+        .then((res) => {
+          if (res) {
+            setLoggedIn(true);
+            setUserEmail(res.data.email);
+            navigate("/");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      navigate("/sign-in");
+    }
   }, []);
+
+  useEffect(() => {
+    if (loggedIn) {
+      api
+        .getAllStartedInfo()
+        .then(([user, cards]) => {
+          setCurrentUser(user);
+          setCards(cards);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [loggedIn]);
 
   function handleConfirmation(card) {
     setIsOpenConfirmationPopup(true);
@@ -67,6 +103,7 @@ function App() {
     setIsOpenSelectedCard(false);
     setIsOpenConfirmationPopup(false);
     setDeletingCard(null);
+    setOpenInfoTooltip(false);
   }, []);
 
   function handleCardLike(card) {
@@ -159,19 +196,85 @@ function App() {
       });
   }
 
+  function handleRegister({ password, email }) {
+    return register(password, email)
+      .then((data) => {
+        if (data) {
+          setResponseInfo({
+            status: true,
+            text: "Вы успешно зарегистрировались!",
+          });
+          navigate("/sign-in", { replace: true });
+        }
+      })
+      .catch((err) => {
+        setResponseInfo({
+          status: false,
+          text: `Что-то пошло не так! Попробуйте ещё раз. ${err}`,
+        });
+      })
+      .finally(() => setOpenInfoTooltip(true));
+  }
+
+  function handleLogin({ password, email }) {
+    return login({ password, email })
+      .then((token) => {
+        if (token) {
+          localStorage.setItem("jwt", token.token);
+          setLoggedIn(true);
+          setUserEmail(email);
+          navigate("/");
+        }
+      })
+      .catch((err) => {
+        console.log(err.status);
+        if (err === "Ошибка: 401 Unauthorized") {
+          setOpenInfoTooltip(true);
+          setResponseInfo({
+            status: false,
+            text: "Такой аккаунт не зарегистрирован",
+          });
+        } else {
+          setOpenInfoTooltip(true);
+          setResponseInfo({
+            status: false,
+            text: `Что-то пошло не так! Попробуйте ещё раз. ${err}`,
+          });
+        }
+      });
+  }
+
+  function handleSignOut() {
+    localStorage.removeItem("jwt");
+    navigate("/sign-in");
+    setLoggedIn(false);
+    setUserEmail("");
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <Header />
-        <Main
-          onEditProfile={handleEditProfileClick}
-          onAddPlace={handleAddPlaceClick}
-          onEditAvatar={handleEditAvatarClick}
-          onCardClick={handleCardClick}
-          onCardLike={handleCardLike}
-          cards={cards}
-          onCardDelete={handleConfirmation}
-        />
+        <Header loggedIn={loggedIn} userEmail={userEmail} onSignOut={handleSignOut} />
+        <Routes>
+          <Route path="/sign-up" element={<Register onRegister={handleRegister} />} />
+          <Route path="/sign-in" element={<Login onLogin={handleLogin} />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRouteElement
+                component={Main}
+                loggedIn={loggedIn}
+                onEditProfile={handleEditProfileClick}
+                onAddPlace={handleAddPlaceClick}
+                onEditAvatar={handleEditAvatarClick}
+                onCardClick={handleCardClick}
+                onCardLike={handleCardLike}
+                cards={cards}
+                onCardDelete={handleConfirmation}
+              />
+            }
+          />
+        </Routes>
         <Footer />
         <EditProfilePopup
           onClose={closeAllPopups}
@@ -204,9 +307,13 @@ function App() {
           onClose={closeAllPopups}
           classSelector="photo"
         />
+        <InfoTooltip
+          isOpen={isOpenInfoTooltip}
+          onClose={closeAllPopups}
+          responseInfo={responseInfo}
+          classSelector="info-tooltip"
+        />
       </div>
     </CurrentUserContext.Provider>
   );
 }
-
-export default App;

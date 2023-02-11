@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import PopupWithForm from "./PopupWithForm.js";
+import PopupWithForm from "./PopupWithForm";
 
 export default function EditAvatarPopup({ isOpen, onUpdateAvatar, isLoading, onClose }) {
   const inputRef = useRef("");
@@ -27,7 +27,7 @@ export default function EditAvatarPopup({ isOpen, onUpdateAvatar, isLoading, onC
     >
       <input
         type="url"
-        className="popup__input popup__input_type_img-link"
+        className="form__input form__input_type_img-link"
         placeholder="Ссылка на картинку"
         name="avatar"
         id="link-avatar"

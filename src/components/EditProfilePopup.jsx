@@ -1,5 +1,5 @@
 import React from "react";
-import PopupWithForm from "./PopupWithForm.js";
+import PopupWithForm from "./PopupWithForm";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 export default function EditProfilePopup({ isOpen, onUpdateUser, isLoading, onClose }) {
@@ -41,7 +41,7 @@ export default function EditProfilePopup({ isOpen, onUpdateUser, isLoading, onCl
     >
       <input
         type="text"
-        className="popup__input popup__input_type_name"
+        className="form__input form__input_type_name"
         placeholder="Имя"
         name="nameProfile"
         id="name-profile"
@@ -54,7 +54,7 @@ export default function EditProfilePopup({ isOpen, onUpdateUser, isLoading, onCl
       <span id="name-profile-error" className="error" />
       <input
         type="text"
-        className="popup__input popup__input_type_job"
+        className="form__input form__input_type_job"
         placeholder="О себе"
         name="jobProfile"
         id="job-profile"

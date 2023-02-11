@@ -28,7 +28,7 @@ export default function AddPlacePopup({ isOpen, onAddPlace, isLoading, onClose }
     >
       <input
         type="text"
-        className="popup__input popup__input_type_place-name"
+        className="form__input form__input_type_place-name"
         placeholder="Название"
         name="nameCard"
         id="name-card"
@@ -40,7 +40,7 @@ export default function AddPlacePopup({ isOpen, onAddPlace, isLoading, onClose }
       <span id="name-card-error" className="error" />
       <input
         type="url"
-        className="popup__input popup__input_type_img-link"
+        className="form__input form__input_type_img-link"
         placeholder="Ссылка на картинку"
         name="linkCard"
         id="link-card"
