@@ -10,6 +10,7 @@ export default function PopupWithForm({
   children,
   onSubmit,
   onClose,
+  disabled,
 }) {
   return (
     <Popup isOpen={isOpen} classSelector={classSelector} onClose={onClose}>
@@ -18,7 +19,14 @@ export default function PopupWithForm({
         <h2 className="popup__title">{title}</h2>
         <form className="form" name={formName} onSubmit={onSubmit}>
           {children}
-          <button className="form__submit-btn button" type="submit">
+          <button
+            className={
+              disabled
+                ? "form__submit-btn  form__submit-btn_disabled"
+                : "form__submit-btn  button"
+            }
+            type="submit"
+          >
             {submitBtnText}
           </button>
         </form>

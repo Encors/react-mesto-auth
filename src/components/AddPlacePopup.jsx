@@ -1,23 +1,44 @@
-import React, { useRef, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PopupWithForm from "./PopupWithForm";
 
 export default function AddPlacePopup({ isOpen, onAddPlace, isLoading, onClose }) {
-  const inputNameRef = useRef("");
-  const inputLinkRef = useRef("");
+  const [formValue, setFormValue] = useState({});
+  const [errorMessage, setErrorMessage] = useState({});
+  const [isValid, setIsValid] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormValue({
+      ...formValue,
+      [name]: value,
+    });
+
+    setErrorMessage({
+      ...errorMessage,
+      [name]: e.target.validationMessage,
+    });
+
+    setIsValid(e.target.closest("form").checkValidity());
+  };
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    onAddPlace({ name: inputNameRef.current.value, link: inputLinkRef.current.value });
+    onAddPlace({ name: formValue.nameCard, link: formValue.linkCard });
   }
 
   useEffect(() => {
-    inputNameRef.current.value = "";
-    inputLinkRef.current.value = "";
+    setErrorMessage("");
+    if (isOpen) {
+      setFormValue("");
+      setIsValid(false);
+    }
   }, [isOpen]);
 
   return (
     <PopupWithForm
+      disabled={!isValid}
       classSelector="add-card"
       formName="card"
       title={"Новое место"}
@@ -28,26 +49,36 @@ export default function AddPlacePopup({ isOpen, onAddPlace, isLoading, onClose }
     >
       <input
         type="text"
-        className="form__input form__input_type_place-name"
+        className={
+          !errorMessage.nameCard ? "form__input " : "form__input form__input_type_error"
+        }
         placeholder="Название"
         name="nameCard"
         id="name-card"
         required
         minLength={2}
+        onChange={handleChange}
         maxLength={30}
-        ref={inputNameRef}
+        value={formValue.nameCard || ""}
       />
-      <span id="name-card-error" className="error" />
+      <span id="name-card-error" className="error">
+        {errorMessage.nameCard}
+      </span>
       <input
         type="url"
-        className="form__input form__input_type_img-link"
+        className={
+          !errorMessage.linkCard ? "form__input" : "form__input form__input_type_error"
+        }
         placeholder="Ссылка на картинку"
         name="linkCard"
         id="link-card"
+        onChange={handleChange}
         required
-        ref={inputLinkRef}
+        value={formValue.linkCard || ""}
       />
-      <span id="link-card-error" className="error" />
+      <span id="link-card-error" className="error">
+        {errorMessage.linkCard}
+      </span>
     </PopupWithForm>
   );
 }

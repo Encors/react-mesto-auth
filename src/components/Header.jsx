@@ -7,9 +7,9 @@ export default function Header({ loggedIn, userEmail, onSignOut }) {
     <header className="header">
       <img className="header__logo" src={logo} alt="Логотип Место" />
       {loggedIn ? (
-        <div className="">
-          <p className="header__userElements-email">{userEmail}</p>
-          <button className="links header__userElements-logout" onClick={onSignOut}>
+        <div className="header__user-elements">
+          <p className="header__user-email">{userEmail}</p>
+          <button className="header__logout button" onClick={onSignOut}>
             Выйти
           </button>
         </div>
@@ -19,10 +19,7 @@ export default function Header({ loggedIn, userEmail, onSignOut }) {
             <Route
               path="/sign-up"
               element={
-                <Link
-                  to={"/sign-in"}
-                  className="header__nav-link header__nav-link_active link"
-                >
+                <Link to={"/sign-in"} className="header__nav-link link">
                   Войти
                 </Link>
               }
@@ -30,10 +27,7 @@ export default function Header({ loggedIn, userEmail, onSignOut }) {
             <Route
               path="/sign-in"
               element={
-                <Link
-                  to={"/sign-up"}
-                  className="header__nav-link header__nav-link_active link"
-                >
+                <Link to={"/sign-up"} className="header__nav-link link">
                   Регистрация
                 </Link>
               }

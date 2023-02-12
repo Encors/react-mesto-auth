@@ -227,7 +227,6 @@ export default function App() {
         }
       })
       .catch((err) => {
-        console.log(err.status);
         if (err === "Ошибка: 401 Unauthorized") {
           setOpenInfoTooltip(true);
           setResponseInfo({
