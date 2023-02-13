@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import LoginAndRegisterForm from "./LoginAndRegisterForm";
 
 export default function Login({ onLogin }) {
-  const [formValue, setFormValue] = useState({ password: "", email: "" });
+  const [formValue, setFormValue] = useState("");
   const [errorMessage, setErrorMessage] = useState({});
   const [isValid, setIsValid] = useState(false);
 

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import LoginAndRegisterForm from "./LoginAndRegisterForm";
 
 export default function Register({ onRegister }) {
-  const [formValue, setFormValue] = useState({ password: "", email: "" });
+  const [formValue, setFormValue] = useState("");
   const [errorMessage, setErrorMessage] = useState({});
   const [isValid, setIsValid] = useState(false);
 
