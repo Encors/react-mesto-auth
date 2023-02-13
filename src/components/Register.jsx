@@ -7,11 +7,11 @@ export default function Register({ onRegister }) {
   const [errorMessage, setErrorMessage] = useState({});
   const [isValid, setIsValid] = useState(false);
 
-  useEffect(() => {
-    console.log(`state is `, formValue);
-    console.log(`state is `, isValid);
-    // console.log(`state is `, errorMessage);
-  }, [formValue]);
+  // useEffect(() => {
+  //   console.log(`state is `, formValue);
+  //   console.log(`state is `, isValid);
+  //   // console.log(`state is `, errorMessage);
+  // }, [formValue]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
