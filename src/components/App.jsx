@@ -215,7 +215,7 @@ export default function App() {
   }
 
   function handleLogin({ password, email }) {
-    return login({ password, email })
+    return login(password, email)
       .then((token) => {
         if (token) {
           localStorage.setItem("jwt", token.token);
