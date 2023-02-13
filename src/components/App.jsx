@@ -198,14 +198,12 @@ export default function App() {
 
   function handleRegister({ password, email }) {
     return register(password, email)
-      .then((data) => {
-        if (data) {
-          setResponseInfo({
-            status: true,
-            text: "Вы успешно зарегистрировались!",
-          });
-          navigate("/sign-in", { replace: true });
-        }
+      .then(() => {
+        setResponseInfo({
+          status: true,
+          text: "Вы успешно зарегистрировались!",
+        });
+        navigate("/sign-in", { replace: true });
       })
       .catch((err) => {
         setResponseInfo({

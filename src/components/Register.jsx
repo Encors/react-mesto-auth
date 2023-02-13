@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import LoginAndRegisterForm from "./LoginAndRegisterForm";
 
@@ -6,6 +6,12 @@ export default function Register({ onRegister }) {
   const [formValue, setFormValue] = useState({ password: "", email: "" });
   const [errorMessage, setErrorMessage] = useState({});
   const [isValid, setIsValid] = useState(false);
+
+  useEffect(() => {
+    console.log(`state is `, formValue);
+    console.log(`state is `, isValid);
+    // console.log(`state is `, errorMessage);
+  }, [formValue]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

@@ -30,11 +30,11 @@ export default function Login({ onLogin }) {
     });
   }
 
-  // useEffect(() => {
-  //   console.log(`state is `, formValue);
-  //   console.log(`state is `, isValid);
-  //   console.log(`state is `, errorMessage);
-  // }, [formValue]);
+  useEffect(() => {
+    console.log(`state is `, formValue);
+    console.log(`state is `, isValid);
+    // console.log(`state is `, errorMessage);
+  }, [formValue]);
 
   return (
     <main className="content">
