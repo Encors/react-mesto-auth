@@ -25,7 +25,7 @@ export default function Login({ onLogin }) {
   function handleSubmit(e) {
     e.preventDefault();
     onLogin(formValue).then(() => {
-      setFormValue({ password: "", email: "" });
+      setFormValue("");
       setErrorMessage("");
     });
   }

@@ -33,7 +33,7 @@ export default function Register({ onRegister }) {
     e.preventDefault();
     onRegister(formValue).then(() => {
       setErrorMessage("");
-      setFormValue({ password: "", email: "" });
+      setFormValue("");
     });
   }
 
