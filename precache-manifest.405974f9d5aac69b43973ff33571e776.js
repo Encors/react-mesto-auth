@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "797ff52f1f3a94284d70",
+    "revision": "06caab07e6fad215443f",
     "url": "/react-mesto-auth/static/css/main.6192be45.chunk.css"
   },
   {
-    "revision": "797ff52f1f3a94284d70",
-    "url": "/react-mesto-auth/static/js/main.797ff52f.chunk.js"
+    "revision": "06caab07e6fad215443f",
+    "url": "/react-mesto-auth/static/js/main.06caab07.chunk.js"
   },
   {
     "revision": "efef7f6fa880e78d2a4c",
@@ -24,16 +24,16 @@ self.__precacheManifest = [
     "url": "/react-mesto-auth/static/media/Inter-Regular.3ac83020.woff"
   },
   {
-    "revision": "661569afe57a38e1529a775a465da20b",
-    "url": "/react-mesto-auth/static/media/Inter-Black.661569af.woff2"
-  },
-  {
     "revision": "dc131113894217b5031000575d9de002",
     "url": "/react-mesto-auth/static/media/Inter-Regular.dc131113.woff2"
   },
   {
-    "revision": "75db5319e7e87c587019a5df08d7272c",
-    "url": "/react-mesto-auth/static/media/Inter-Medium.75db5319.woff2"
+    "revision": "d0b121f3a9d3d88afdfd6902d31ee9a0",
+    "url": "/react-mesto-auth/static/media/Inter-Black.d0b121f3.woff"
+  },
+  {
+    "revision": "661569afe57a38e1529a775a465da20b",
+    "url": "/react-mesto-auth/static/media/Inter-Black.661569af.woff2"
   },
   {
     "revision": "6bfdb35467f51d3ba1f70f8d4a9c2b59",
@@ -44,12 +44,12 @@ self.__precacheManifest = [
     "url": "/react-mesto-auth/static/media/AddButton.b2fce4ac.svg"
   },
   {
-    "revision": "68fe0213bb2792e2c581fbd7b72f9969",
-    "url": "/react-mesto-auth/static/media/like.68fe0213.svg"
+    "revision": "75db5319e7e87c587019a5df08d7272c",
+    "url": "/react-mesto-auth/static/media/Inter-Medium.75db5319.woff2"
   },
   {
-    "revision": "d0b121f3a9d3d88afdfd6902d31ee9a0",
-    "url": "/react-mesto-auth/static/media/Inter-Black.d0b121f3.woff"
+    "revision": "68fe0213bb2792e2c581fbd7b72f9969",
+    "url": "/react-mesto-auth/static/media/like.68fe0213.svg"
   },
   {
     "revision": "3d813f810a41032c140568c878fd7d85",
@@ -84,7 +84,7 @@ self.__precacheManifest = [
     "url": "/react-mesto-auth/static/media/not_register.4072126c.svg"
   },
   {
-    "revision": "85371bb9176cdda0358721ca65c1b61c",
+    "revision": "f456b3f81801e1f70de3528cf9065f63",
     "url": "/react-mesto-auth/index.html"
   }
 ];
